@@ -1,0 +1,38 @@
+{%  extends 'base.html' %}
+{% block main_part %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="cryptorio-forms text-center pt-5 pb-5">
+                    <h3 class="p-4">Register</h3>
+                    <div class="cryptorio-main-form">
+                        <form action="" class="text-left" method="post">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="register_email" placeholder="Please Input Your email" value="{{ request.form.register_email }}">
+
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="register_username" placeholder="Your Username" value="{{ request.form.register_username }}">
+
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="register_password" placeholder="6-20 letters and numbers" value="{{ request.form.register_password }}">
+
+                            <label for="confirm-password">Confirm Password</label>
+                            <input type="password" id="confirm-password" name="confirm_password" placeholder="6-20 letters and numbers" value="{{ request.form.confirm_password }}">
+
+                            <div class="my-1">
+                              <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="terms-agree">
+                                <label class="custom-control-label" for="terms-agree">I agree to the terms of services</label>
+                              </div>
+                            </div>
+                            <input type="submit" value="SignUp" class="crypt-button-red-full">
+                        </form>
+                        <p class="float-center"><a href="{{ url_for('login') }}">Log In</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+{% endblock %}

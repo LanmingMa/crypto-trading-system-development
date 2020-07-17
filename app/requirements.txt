@@ -1,0 +1,6 @@
+Flask
+mysql-connector
+datetime
+requests
+asyncio
+timedelta

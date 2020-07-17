@@ -1,0 +1,340 @@
+{%  extends 'base.html' %}
+{% block main_part %}
+	<!-- Main Content -->
+	<div class="container-full-width">
+		<div class="row sm-gutters">
+			<div class="col-xl-0 d-none d-xl-block"></div>
+			<div class="col-md-8 col-lg-8 col-xl-6">
+				<div class="crypt-dash-withdraw mt-3 d-block" id="bitcoin">
+					<div class="crypt-withdraw-body bg-white">
+						<div class="row">
+							<div class="col-md-3">
+							<div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+								<a 
+									class="nav-link active" 
+									id="v-pills-zilliqua-btc-deposit-tab" 
+									data-toggle="pill" 
+									href="#v-pills-zilliqua-btc-deposit" 
+									role="tab" 
+									aria-controls="v-pills-zilliqua-btc-deposit" 
+									aria-selected="true">
+										<i class="pe-7s-bottom-arrow"></i> Deposit
+								</a>
+
+								<a 
+									class="nav-link" 
+									id="v-pills-zilliqua-btc-withdrawl-tab" 
+									data-toggle="pill"
+									href="#v-pills-zilliqua-btc-withdrawl" 
+									role="tab" 
+									aria-controls="v-pills-zilliqua-btc-withdrawl" 
+									aria-selected="false">
+										<i class="pe-7s-up-arrow"></i> Withdraw
+								</a>
+
+                                <a
+									class="nav-link"
+									id="v-pills-zilliqua-btc-cash-tab"
+									data-toggle="pill"
+									href="#v-pills-zilliqua-btc-cash"
+									role="tab"
+									aria-controls="v-pills-zilliqua-btc-cash"
+									aria-selected="false">
+										<i class="pe-7s-alarm"></i> Cash
+								</a>
+
+								<a 
+									class="nav-link" 
+									id="v-pills-zilliqua-btc-history-tab" 
+									data-toggle="pill" 
+									href="#v-pills-zilliqua-btc-history" 
+									role="tab" 
+									aria-controls="v-pills-zilliqua-btc-history" 
+									aria-selected="false">
+										<i class="pe-7s-clock"></i> Blotter
+								</a>
+
+								<a
+									class="nav-link"
+									id="v-pills-zilliqua-btc-balance-tab"
+									data-toggle="pill"
+									href="#v-pills-zilliqua-btc-balance"
+									role="tab"
+									aria-controls="v-pills-zilliqua-btc-balance"
+									aria-selected="false">
+										<i class="pe-7s-refresh-2"></i> P&L
+								</a>
+
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div class="tab-content" id="v-pills-zilliqua-btc-tabContent">
+							  	<div class="tab-pane fade show active" id="v-pills-zilliqua-btc-deposit" role="tabpanel" aria-labelledby="v-pills-zilliqua-btc-deposit-tab">
+							  		<h6 class="text-uppercase">Deposit Now</h6>
+							  		<form class="deposit-form" action="{{ url_for('account')}}" method="POST">
+							  			<div class="crypt-radio-boxed">
+								  			<input type="radio" name="payment_amount" id="payment-btc-amount1" class="payment-amount" value="30000">
+								  			<label for="payment-btc-amount1">$ 30000</label>
+								  			<div class="check"></div>
+							  			</div>
+							  			<div class="crypt-radio-boxed">
+								  			<input type="radio" name="payment_amount" id="payment-btc-amount2" class="payment-amount" value="20000">
+                                            <label for="payment-btc-amount2">$ 20000</label>
+								  			<div class="check"></div>
+							  			</div>
+							  			<div class="crypt-radio-boxed">
+							  				<input type="radio" name="payment_amount" id="payment-btc-amount3" class="payment-amount" value="10000">
+                                            <label for="payment-btc-amount3">$ 10000</label>
+								  			<div class="check"></div>
+						  				</div>
+							  			<div class="crypt-radio-boxed">
+							  				<input type="radio" name="payment_amount" id="payment-btc-amount4" class="payment-amount" value ="5000">
+                                            <label for="payment-btc-amount4">$ 5000 </label>
+								  			<div class="check"></div>
+						  				</div>
+							  			<div class="crypt-radio-boxed">
+							  				<input type="radio" name="payment_amount" id="payment-btc-amount5" class="payment-amount" value = "2000">
+                                            <label for="payment-btc-amount5">$ 2000 </label>
+								  			<div class="check"></div>
+						  				</div>
+							  			<div class="crypt-radio-boxed">
+							  				<input type="radio" name="payment_amount" id="payment-btc-amount6" class="payment-amount" value = "1000">
+                                            <label for="payment-btc-amount6">$ 1000 </label>
+
+								  			<div class="check"></div>
+						  				</div>
+						  				<div class="form-group mt-2">
+										    <select class="crypt-image-select" required name="method">
+										      	<option value="">Choose A Payment Option</option>
+										      	<option value="1">Visa</option>
+										      	<option value="2">Master Card</option>
+										      	<option value="3">AMEX</option>
+										    </select>
+										</div>
+										<div class="input-group input-text-select mb-3">
+										  	<div class="input-group-prepend">
+										    	<input placeholder="Amount" type="text" class="form-control crypt-input-lg"
+                                                       name="payment_amount" value="{{ request.form.payment_amount }}">
+										  	</div>
+										</div>
+{#										<a href="{{ url_for('trading') }}" class="crypt-button-red-full" type="submit" name="operation" value="payment">Proceed To Payment</a>#}
+                                        <input type="submit" name="operation" value="payment" class="crypt-button-green-full">
+							  		</form>
+							  	</div>
+								<div class="tab-pane fade" id="v-pills-zilliqua-btc-withdrawl" role="tabpanel" aria-labelledby="v-pills-zilliqua-btc-withdrawl-tab">
+									<h4 class="crypt-down">Wire bank transfer</h4>
+							  		<p><i class="pe-7s-info"></i> Standard bank transfer will be made up to 2 workdays</p>
+                                    <form method="POST">
+							  			<div class="input-group mb-3">
+										  	<input type="text" placeholder="Amount" class="form-control" name="payment_amount" value="{{ request.form.payment_amount }}">
+										  	<div class="input-group-append">
+										    	<span class="input-group-text">USD</span>
+										  	</div>
+										</div>
+							  			<div class="input-group mb-3">
+										  	<input type="text" placeholder="Bank Account Number" class="form-control" name="bank-account">
+										  	<div class="input-group-append">
+											    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">Other Address</button>
+											    <div class="dropdown-menu">
+											      <a class="dropdown-item" href="#">Home</a>
+											      <a class="dropdown-item" href="#">Office</a>
+											    </div>
+											  </div>
+										</div>
+										<div class="form-group">
+										    <input type="text" class="form-control" placeholder="Name" name="name">
+										</div>
+										<div class="form-group">
+										    <input type="text" class="form-control" placeholder="Swift Code" name="swift">
+										</div>
+										<div class="form-group">
+										    <div class="form-group">
+											    <select class="form-control">
+											      <option>Country</option>
+											      <option>United States</option>
+											      <option>Japan</option>
+											      <option>China</option>
+											    </select>
+											</div>
+										</div>
+										<div class="form-group">
+										    <div class="form-check">
+										      	<input class="form-check-input" type="checkbox" id="recipient-btc">
+										      	<label class="form-check-label" for="recipient-btc">
+										        Add To recipient
+										      	</label>
+										    </div>
+										</div>
+{#										<a href="" class="crypt-button-red-full" type="submit" name="operation" value="withdrraw">Initiate Withdraw</a>#}
+                                        <input type="submit" name="operation" value="withdraw" class="crypt-button-red-full">
+							  		</form>
+								</div>
+
+                            <div class="tab-pane fade" id="v-pills-zilliqua-btc-cash" role="tabpanel" aria-labelledby="v-pills-zilliqua-btc-cash-tab">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Wallet</th>
+                                                <th scope="col">Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>Remaining Cash</th>
+                                                <td>{{ Cash_quantity }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+							  	</div>
+
+							  	<div class="tab-pane fade" id="v-pills-zilliqua-btc-history" role="tabpanel" aria-labelledby="v-pills-zilliqua-btc-history-tab">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Crypto</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Side</th>
+                                                <th scope="col">Money</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for blotter in blotter_list %}
+                                            <tr>
+                                                <th>{{ blotter[0] }}</th>
+                                                <td>{{ blotter[1] }}</td>
+                                                <td>{{ blotter[2] }}</td>
+                                                <td>{{ blotter[3] }}</td>
+                                                <td>{{ blotter[4] }}</td>
+                                                <td>{{ blotter[5] }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+							  	</div>
+							  	<div class="tab-pane fade" id="v-pills-zilliqua-btc-balance" role="tabpanel" aria-labelledby="v-pills-zilliqua-btc-balance-tab">
+							  		<table class="table table-striped">
+									  	<thead>
+										    <tr>
+										      <th scope="col">Crypto</th>
+										      <th scope="col">Quantity</th>
+										      <th scope="col">UPL</th>
+                                                <th scope="col">RPL</th>
+                                                <th scope="col">VWAP</th>
+										    </tr>
+									  	</thead>
+									  	<tbody>
+
+                                            {% for coin in PnL_list %}
+                                            <tr>
+                                              <th scope="row"> {{ coin[0] }} </th>
+                                              <td>{{ coin[1] }}</td>
+                                              <td>{{ coin[2] }}</td>
+                                                <td>{{ coin[3] }}</td>
+                                                <td>{{ coin[4] }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                          </tbody>
+									</table>
+							  	</div>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="crypt-dash-withdraw mt-3 d-none" id="litecoin">
+					<div class="crypt-withdraw-heading">
+						<div class="row">
+							<div class="col-md-3">
+								<p><b>1 LTC</b></p>
+								<p class="crypt-up"><b>$34.05 USD (3.60%)</b></p>
+							</div>
+							<div class="col-md-5">
+								<i class="pe-7s-lock icon-big"></i> 
+								<p><b>Locked: $ 10.00</b></p>
+							</div>
+							<div class="col-md-4">
+								<p><b>Total:</b></p>
+								<p class="crypt-up"><b> $ 435,634,234.00</b></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="crypt-dash-withdraw mt-3 d-none" id="xrp">
+					<div class="crypt-withdraw-heading">
+						<div class="row">
+							<div class="col-md-3">
+								<p><b>1 XRP</b></p>
+								<p class="crypt-up"><b>$0.306974 USD (0.17%)</b></p>
+							</div>
+							<div class="col-md-5">
+								<i class="pe-7s-lock icon-big"></i> 
+								<p><b>Locked: $ 10.00</b></p>
+							</div>
+							<div class="col-md-4">
+								<p><b>Total:</b></p>
+								<p class="crypt-up"><b> $ 435,634,234.00</b></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="crypt-dash-withdraw mt-3 d-none" id="monero">
+					<div class="crypt-withdraw-heading">
+						<div class="row">
+							<div class="col-md-3">
+								<p><b>1 Monero</b></p>
+								<p class="crypt-down"><b>$43.12 USD (-0.79%)</b></p>
+							</div>
+							<div class="col-md-5">
+								<i class="pe-7s-lock icon-big"></i> 
+								<p><b>Locked: $ 10.00</b></p>
+							</div>
+							<div class="col-md-4">
+								<p><b>Total:</b></p>
+								<p class="crypt-up"><b> $ 435,634,234.00</b></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="crypt-dash-withdraw mt-3 d-none" id="zilliqua">
+					<div class="crypt-withdraw-heading">
+						<div class="row">
+							<div class="col-md-3">
+								<p><b>1 Zilliqua</b></p>
+								<p class="crypt-up"><b>$0.018092 USD (0.29%)</b></p>
+							</div>
+							<div class="col-md-5">
+								<i class="pe-7s-lock icon-big"></i> 
+								<p><b>Locked: $ 0.00</b></p>
+							</div>
+							<div class="col-md-4">
+								<p><b>Total:</b></p>
+								<p class="crypt-up"><b> $ 23454.00</b></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="crypt-dash-withdraw mt-3 d-none" id="dash">
+					<div class="crypt-withdraw-heading">
+						<div class="row">
+							<div class="col-md-3">
+								<p><b>1 Dash</b></p>
+								<p class="crypt-up"><b>$67.35 USD (0.30%)</b></p>
+							</div>
+							<div class="col-md-5">
+								<i class="pe-7s-lock icon-big"></i> 
+								<p><b>Locked: $ 0.00</b></p>
+							</div>
+							<div class="col-md-4">
+								<p><b>Total:</b></p>
+								<p class="crypt-up"><b> $ 23454.00</b></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

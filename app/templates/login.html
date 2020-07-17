@@ -1,0 +1,29 @@
+{%  extends 'base.html' %}
+{% block main_part %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="cryptorio-forms text-center pt-5 pb-5">
+                    <h3 class="p-4">Login</h3>
+                    <div class="cryptorio-main-form">
+
+                        <form action="{{ url_for('login')}}" class="text-left" method="post">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="email" placeholder="Your Email Address" value="{{ request.form.email }}">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Your Password" value="{{ request.form.password }}">
+
+                            <input type="submit" value="Log In" class="crypt-button-red-full">
+                        </form>
+                        <p class="float-center"><a href="{{ url_for('register') }}">Sign Up</a></p>
+{#                        {% if error %}#}
+{#                        <p class="error"><strong>Error:</strong> {{ error }}#}
+{#                        {% endif %}#}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+{% endblock %}

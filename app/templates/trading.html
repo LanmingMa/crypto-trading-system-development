@@ -1,0 +1,239 @@
+{%  extends 'base.html' %}
+{% block main_part %}
+<script type="text/javascript">
+	var intervalID = setInterval(update_values, 500);
+	function update_values() {
+		$.getJSON($SCRIPT_ROOT + '/_stuff',
+			function (data) {
+				class currencyData {
+					constructor(name, marketData, weekdata, imageName) {
+						this.name = name;
+						this.marketData = marketData;
+						this.weekdata = weekdata;
+						this.imageName = imageName;
+					}
+				}
+				BitcoinData = new currencyData('Bitcoin', data.BTC, data.BitcoinWeekData, 'btc')
+				EthriumData = new currencyData('Ethrium', data.ETH, data.EthriumWeekData, 'eth')
+				LitecoinData = new currencyData('Litecoin', data.LTC, data.LitecoinWeekData, 'ltc')
+				currencies = [BitcoinData, EthriumData, LitecoinData]
+				console.log(currencies)
+				for (let i = 0; i < 3; i++) {
+					updatedPrice = currencies[i].imageName.concat('Price')
+					updatedAskPrice = currencies[i].imageName.concat('AskPrice')
+					updatedBidPrice = currencies[i].imageName.concat('BidPrice')
+					if (i < 3) {
+						$('#'.concat(updatedPrice)).text('$'.concat(Number(currencies[i].marketData['weightedAvgPrice']).toFixed(2)));
+						$('#'.concat(updatedBidPrice)).text('$'.concat(Number(currencies[i].marketData['bidPrice']).toFixed(2)));
+						$('#'.concat(updatedAskPrice)).text('$'.concat(Number(currencies[i].marketData['askPrice']).toFixed(2)));
+						document.getElementById(''.concat(updatedPrice)).innerHTML;
+					} else {
+						$('#'.concat(updatedBidPrice)).text('$'.concat(Number(currencies[i].marketData['bidPrice'])));
+						$('#'.concat(updatedAskPrice)).text('$'.concat(Number(currencies[i].marketData['askPrice'])));
+					}
+					document.getElementById(''.concat(updatedVolume)).innerHTML;
+					document.getElementById(''.concat(updatedPricePercentage)).innerHTML;
+				}
+			});
+	};
+</script>
+
+	<!-- Main Content -->
+	<div class="container-fluid">
+		<div class="row sm-gutters">
+			<div class="col-lg-5">
+				<div class="crypt-boxed-area">
+					<h6 class="crypt-bg-head"><b class="crypt-up">BUY</b> / <b class="crypt-down">SELL</b></h6>
+                    <form action="{{ url_for('trading')}}" method="post">
+                    <div class="col-md-12">
+                            <p><span><b>Choose a currency</b></span></p>
+                                <select class="custom-select" name="crypto_name">
+                                    <option value="BTC">BTC</option>
+                                    <option value="ETH">ETH</option>
+                                    <option value="LTC">LTC</option>
+                                </select>
+                    </div>
+					<div class="row no-gutters">
+						<div class="col-md-6">
+							<div class="crypt-buy-sell-form">
+                                <p><span class="crypt-up"><b>  Ask Price: </b></span></p>
+								    <div class="crypt-buy">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Price</span>
+                                            </div>
+                                            {#get input of price#}
+									  	    <input type="text" id="price" name="buy_price" class="form-control" value="{{ request.form.buy_price }}">
+									    </div>
+									    <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Amount</span>
+                                            </div>
+                                            {#get input of amount#}
+                                            <input type="text" id="amount" name="buy_amount"  class="form-control" value="{{ request.form.buy_amount }}">
+									    </div>
+                                        <div class="menu-green">
+                                            <input type="submit" name="side" value="Buy" class="crypt-button-green-full">
+                                        </div>
+								    </div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="crypt-buy-sell-form">
+                                <p><span class="crypt-down"><b>  Bid Price:</b></span></p>
+								    <div class="crypt-sell">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Price</span>
+                                            </div>
+                                            {#get input of price#}
+									  	    <input type="text" id="price" name="sell_price" class="form-control" value="{{ request.form.sell_price }}">
+									    </div>
+									    <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Amount</span>
+                                            </div>
+                                            {#get input of amount#}
+                                            <input type="text" id="amount" name="sell_amount" class="form-control" value="{{ request.form.sell_amount }}">
+									    </div>
+                                        <div class="menu-red">
+                                            <input type="submit" name="side" class="crypt-button-red-full" value="Sell">
+                                        </div>
+								    </div>
+							</div>
+						</div>
+					</div>
+                    </form>
+				</div>
+			</div>
+			<div class="col-lg-7">
+                <div class="table-responsive">
+{#                <div class="crypt-market-status">#}
+                    <table class="table table-striped crypt-table-market-cap mt-4">
+                        <thead>
+                            <tr>
+                                <th scope="col">Crypto</th>
+                                <th scope="col">Ask Price</th>
+                                <th scope="col">Bid Price</th>
+                                <th scope="col">7 days</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in range(3) %}
+                            <tr></tr>
+{#                              <td class="text-center pl-2 font-weight-bold">{{ currencies[i].name}}</td>#}
+                            <td class="text-center pl-2 font-weight-bold">
+                                <img src="../static/images/coins/{{currencies[i].imageName}}.png" width="20"
+                                    class="pr-1 crypt-market-cap-logo" alt="coin">{{ currencies[i].name}}</td>
+                            {% if i < 3 %}
+                            <td><span
+                                    id="{{currencies[i].imageName}}AskPrice">${{ '%0.2f'|format(currencies[i].marketData['askPrice']|float())}}
+                                </span></td>
+                            <td><span
+                                    id="{{currencies[i].imageName}}BidPrice">${{ '%0.2f'|format(currencies[i].marketData['bidPrice']|float())}}
+                                </span></td>
+                            {% else %}
+                            <td><span id="{{currencies[i].imageName}}AskPrice">${{ currencies[i].marketData['askPrice']}}
+                                </span></td>
+                            <td><span id="{{currencies[i].imageName}}BidPrice">${{ currencies[i].marketData['bidPrice']}}
+                                </span></td>
+                            {% endif %}
+                                <td class="crypt-marketcap-canvas" data-charts="{{ currencies[i].weekdata }}" data-bg="fcbcb3"
+							data-border="8cd8aa">
+							<canvas></canvas>
+						        </td>
+						        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+		    </div>
+				<div class="col-lg-12">
+					<div class="crypt-market-status">
+					<div>
+					  <!-- Nav tabs -->
+					  	<ul class="nav nav-tabs">
+					    	<li role="presentation"><a href="#closed-orders"  class="active" data-toggle="tab">Blotter</a></li>
+					    	<li role="presentation"><a href="#balance" data-toggle="tab">P&L</a></li>
+                            <li role="presentation"><a href="#cash" data-toggle="tab">Cash Wallet</a></li>
+					  	</ul>
+
+					  <!-- Tab panes -->
+					  <div class="tab-content">
+					    <div role="tabpanel" class="tab-pane active" id="closed-orders">
+					    	<table class="table table-striped">
+							  <thead>
+							    <tr>
+  							        <th scope="col">Time</th>
+                                    <th scope="col">Crypto</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Side</th>
+                                    <th scope="col">Money</th>
+                                </tr>
+							  </thead>
+							  <tbody>
+                                {% for blotter in blotter_list %}
+							    <tr>
+                                    <th>{{ blotter[0] }}</th>
+                                    <td>{{ blotter[1] }}</td>
+                                    <td>{{ blotter[2] }}</td>
+                                    <td>{{ blotter[3] }}</td>
+                                    <td>{{ blotter[4] }}</td>
+                                    <td>{{ blotter[5] }}</td>
+							    </tr>
+                                {% endfor %}
+							  </tbody>
+							</table>
+					    </div>
+
+                        <div role="tabpanel" class="tab-pane fade" id="cash">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Wallet</th>
+                                        <th scope="col">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Remaining Cash</th>
+                                        <td>{{ Cash_quantity }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+					    <div role="tabpanel" class="tab-pane fade" id="balance">
+					    	<table class="table table-striped">
+							  <thead>
+							    <tr>
+                                    <th scope="col">Crypto</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">UPL</th>
+                                    <th scope="col">RPL</th>
+                                    <th scope="col">VWAP</th>
+							    </tr>
+							  </thead>
+
+							  <tbody>
+                                {% for coin in PnL_list %}
+							    <tr>
+							      <th scope="row"> {{ coin[0] }} </th>
+							      <td>{{ coin[1] }}</td>
+							      <td>{{ coin[2] }}</td>
+                                  <td>{{ coin[3] }}</td>
+                                    <td>{{ coin[4] }}</td>
+							    </tr>
+                                {% endfor %}
+							  </tbody>
+							</table>
+					    </div>
+					  </div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
